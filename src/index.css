@@ -19,9 +19,14 @@ html {
 }
 
 body {
+  margin: 0;
   background-color: var(--color-ink);
   color: var(--color-paper);
   font-family: var(--font-body);
+}
+
+#root {
+  min-height: 100vh;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -39,7 +44,9 @@ body {
 }
 
 a:focus-visible,
-button:focus-visible {
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
   outline: 2px solid var(--color-amber);
   outline-offset: 3px;
 }
