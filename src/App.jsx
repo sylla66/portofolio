@@ -10,11 +10,11 @@ const PROFILE = {
   location: "Dakar, Sénégal",
   tagline:
     "Plus de 3 ans à concevoir et déployer des applications web robustes — à l'aise sur Angular/Spring Boot comme sur Node.js/React. Spécialisé APIs REST, paiements Stripe, dashboards analytiques et CI/CD.",
-  email: "sylla.66.hamidou@gmail.com",
-  phone: "+221 77 823 55 61",
-  github: "https://github.com/sylla66",
-  linkedin: "https://www.linkedin.com/in/hamidou-sylla/",
-  formspreeEndpoint: "https://formspree.io/f/xlgywazj",
+  email: import.meta.env.VITE_EMAIL || "sylla.66.hamidou@gmail.com",
+  phone: import.meta.env.VITE_PHONE || "+221 77 823 55 61",
+  github: import.meta.env.VITE_GITHUB || "https://github.com/sylla66",
+  linkedin: import.meta.env.VITE_LINKEDIN || "https://www.linkedin.com/in/hamidou-sylla/",
+  formspreeEndpoint: import.meta.env.VITE_FORMSPREE_ENDPOINT || "https://formspree.io/f/xlgywazj",
 };
 
 const STACK_STATUS = [
@@ -125,11 +125,11 @@ const LANGUAGES = [
 const SERVICES = [
   {
     title: "Applications web modernes",
-    body: "Interfaces React/Angular rapides, propres et pensées pour l’utilisateur, avec une vraie cohérence UX/UI.",
+    body: "Interfaces React/Angular rapides, propres et pensées pour l'utilisateur, avec une vraie cohérence UX/UI.",
   },
   {
     title: "Architecture & performance",
-    body: "Conception d’APIs REST robustes, gestion des données, sécurité et optimisation des performances.",
+    body: "Conception d'APIs REST robustes, gestion des données, sécurité et optimisation des performances.",
   },
   {
     title: "Accompagnement produit",
@@ -221,7 +221,7 @@ function Hero() {
           </div>
           <div className="mt-6 flex flex-wrap gap-3">
             {[
-              { label: "3+ ans d’expérience" },
+              { label: "3+ ans d'expérience" },
               { label: "Remote / Local" },
               { label: "React · Java · APIs" },
             ].map((pill) => (
@@ -351,7 +351,7 @@ function Projects() {
           Projets
         </p>
         <h2 className="mt-3 font-display text-2xl font-semibold text-paper md:text-3xl">
-          Ce que j’ai construit.
+          Ce que j'ai construit.
         </h2>
         <div className="mt-10 grid gap-6 md:grid-cols-2">
           {PROJECTS.map((p) => (
@@ -401,7 +401,7 @@ function Experience() {
           Expérience
         </p>
         <h2 className="mt-3 font-display text-2xl font-semibold text-paper md:text-3xl">
-          Où j’ai travaillé.
+          Où j'ai travaillé.
         </h2>
         <div className="mt-10 divide-y divide-line/70 border-y border-line/70">
           {EXPERIENCE.map((job) => (
@@ -460,13 +460,21 @@ function Experience() {
 }
 
 function Contact() {
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [status, setStatus] = useState({ type: "", message: "" });
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState({ type: "", message: "" });
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setForm((current) => ({ ...current, [name]: value }));
+    setFormData((current) => ({ ...current, [name]: value }));
+
+    if (status.message) {
+      setStatus({ type: "", message: "" });
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -475,30 +483,38 @@ function Contact() {
     setStatus({ type: "", message: "" });
 
     try {
-      // Formspree recommande un POST en JSON pour les apps SPA (React/Vue) :
-      // c'est plus fiable que FormData dans ce contexte.
       const response = await fetch(PROFILE.formspreeEndpoint, {
         method: "POST",
         headers: {
-          Accept: "application/json",
           "Content-Type": "application/json",
+          Accept: "application/json",
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          _subject: "Nouveau message depuis le portfolio",
+        }),
       });
 
-      const data = await response.json().catch(() => null);
-
       if (response.ok) {
-        setStatus({ type: "success", message: "Merci ! Votre message a bien été envoyé." });
-        setForm({ name: "", email: "", message: "" });
+        setStatus({
+          type: "success",
+          message: "Merci ! Votre message a bien été envoyé. Je vous répondrai rapidement.",
+        });
+        setFormData({ name: "", email: "", message: "" });
       } else {
-        const errorMsg = data?.errors?.map((err) => err.message).join(", ");
-        throw new Error(errorMsg || "Le formulaire n’a pas pu être envoyé.");
+        const errorPayload = await response.json().catch(() => null);
+        const serverMessage = errorPayload?.errors?.[0]?.message || "Veuillez réessayer ou m’écrire directement à " + PROFILE.email + ".";
+        setStatus({
+          type: "error",
+          message: `Le formulaire n'a pas pu être envoyé. ${serverMessage}`,
+        });
       }
     } catch (error) {
       setStatus({
         type: "error",
-        message: "Une erreur est survenue. Vous pouvez aussi m’écrire directement à " + PROFILE.email + ".",
+        message: `Le formulaire n'a pas pu être envoyé. Vérifiez votre connexion ou écrivez-moi directement à ${PROFILE.email}.`,
       });
     } finally {
       setIsSubmitting(false);
@@ -544,10 +560,11 @@ function Contact() {
                 <input
                   type="text"
                   name="name"
-                  value={form.name}
+                  value={formData.name}
                   onChange={handleChange}
                   required
                   className="w-full rounded-2xl border border-line bg-ink px-4 py-3 text-sm text-paper outline-none transition focus:border-amber"
+                  placeholder="Votre nom"
                 />
               </label>
               <label className="text-sm text-paper-dim">
@@ -557,10 +574,11 @@ function Contact() {
                 <input
                   type="email"
                   name="email"
-                  value={form.email}
+                  value={formData.email}
                   onChange={handleChange}
                   required
                   className="w-full rounded-2xl border border-line bg-ink px-4 py-3 text-sm text-paper outline-none transition focus:border-amber"
+                  placeholder="votre@email.com"
                 />
               </label>
             </div>
@@ -571,11 +589,12 @@ function Contact() {
               </span>
               <textarea
                 name="message"
-                value={form.message}
+                value={formData.message}
                 onChange={handleChange}
                 rows="5"
                 required
                 className="w-full rounded-2xl border border-line bg-ink px-4 py-3 text-sm text-paper outline-none transition focus:border-amber"
+                placeholder="Votre message..."
               />
             </label>
 
@@ -597,7 +616,7 @@ function Contact() {
                 className={`mt-4 rounded-2xl px-4 py-3 text-sm ${
                   status.type === "success"
                     ? "border border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
-                    : "border border-amber/30 bg-amber/10 text-amber-200"
+                    : "border border-red-500/30 bg-red-500/10 text-red-300"
                 }`}
                 aria-live="polite"
               >
