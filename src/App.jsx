@@ -24,16 +24,23 @@ const STACK_STATUS = [
   { key: "availability", value: "Missions locales ou remote" },
 ];
 
+// Parcours technique : PRODAC (mission pro) et RentalCar (projet perso) sont
+// bien distincts, même s'ils se déroulent sur la même période.
 const MIGRATION = [
   {
     period: "2022 — 2024",
     title: "Fondations Angular + Spring Boot",
-    body: "SIHITY Hi-Tech (Casablanca), puis Groupe Sonatel : dashboards stratégiques pour Orange Finance Mobile, monitoring fibre optique Saytu-DRPS, migration SQL Server vers PostgreSQL.",
+    body: "SIHITY Hi-Tech (Casablanca), puis Groupe Sonatel : dashboard de KPIs stratégiques pour la Direction Générale, dashboards Orange Finance Mobile, monitoring fibre optique Saytu-DRPS, migration SQL Server vers PostgreSQL.",
   },
   {
     period: "2024 — 2026",
-    title: "PRODAC & montée en puissance Node.js + React",
-    body: "Développeur Full-Stack & Administrateur BDD chez PRODAC (Ministère de l'Agriculture) : architecture hexagonale, audit logging asynchrone, RBAC. En parallèle, construction de RentalCar en autonomie sur Node/Express/React.",
+    title: "PRODAC — Mission professionnelle",
+    body: "Choix des technologies et développement backend de deux applications au Ministère de l'Agriculture — Archivage documentaire et Plan de travail mensuel — toutes deux en production. Suivi de l'équipe pour garantir la réussite des projets. Stack : Spring Boot 3, Java 21, Angular.",
+  },
+  {
+    period: "En parallèle, 2024 — 2026",
+    title: "RentalCar — Projet personnel",
+    body: "Construction en autonomie, hors PRODAC, d'une plateforme complète de location/vente de véhicules sur Node.js/Express/React, pour monter en puissance sur cet écosystème.",
   },
   {
     period: "Aujourd'hui",
@@ -45,9 +52,9 @@ const MIGRATION = [
 const PROJECTS = [
   {
     name: "RentalCar",
-    tag: "Projet phare",
+    tag: "Projet personnel",
     description:
-      "Application full-stack de location et vente de véhicules. API REST complète : auth JWT, catalogue véhicules, réservations anti-chevauchement, paiement Stripe end-to-end, avis clients et dashboard admin avec KPIs temps réel.",
+      "Application full-stack de location et vente de véhicules, développée en autonomie (hors cadre professionnel). API REST complète : auth JWT, catalogue véhicules, réservations anti-chevauchement, paiement Stripe end-to-end (PaymentIntent → Elements → Webhook), avis clients et dashboard admin avec KPIs temps réel. Sécurité : Helmet, rate limiting, CORS multi-origines, bcrypt. 44 tests automatisés.",
     stack: ["Node.js", "Express 5", "MongoDB", "React 19", "Stripe", "Jest", "GitHub Actions"],
     links: [
       { label: "Code backend", href: "https://github.com/sylla66/backend-rental-car" },
@@ -56,10 +63,10 @@ const PROJECTS = [
     ],
   },
   {
-    name: "PRODAC — Archivage documentaire",
-    tag: "Ministère de l'Agriculture",
+    name: "PRODAC — Archivage documentaire & Plan de travail mensuel",
+    tag: "Mission professionnelle · Ministère de l'Agriculture · En production",
     description:
-      "Système de numérisation et d'archivage de documents institutionnels en architecture hexagonale avec audit logging asynchrone, JWT, RBAC multi-niveaux et optimisation MySQL.",
+      "Deux applications déployées en production pour le Ministère de l'Agriculture. Responsable du choix des technologies et du développement backend, avec suivi de l'équipe pour garantir la réussite des projets. Archivage documentaire : numérisation et archivage institutionnel en architecture hexagonale, audit logging asynchrone (@Async + AOP), accès JWT avec traçage IP/User-Agent, RBAC multi-niveaux. Plan de travail mensuel : suivi et validation des plans de travail des équipes, avec reporting pour les responsables.",
     stack: ["Spring Boot 3", "Java 21", "Angular", "MySQL", "JWT"],
     links: [{ label: "Confidentiel — détails sur demande", href: "#contact" }],
   },
@@ -69,27 +76,50 @@ const EXPERIENCE = [
   {
     company: "PRODAC — Ministère de l'Agriculture",
     role: "Développeur Full-Stack & Administrateur BDD",
-    period: "Juin 2024 — présent",
-    body: "Application de numérisation et d'archivage de documents institutionnels. APIs REST sécurisées, optimisation des performances MySQL, dashboards analytiques pour les équipes métier.",
+    period: "2024 — 2026",
+    body: "Choix des technologies et développement backend de deux applications en production : Archivage documentaire (numérisation et archivage institutionnel) et Plan de travail mensuel (suivi des équipes). Suivi de l'équipe de développement pour garantir la réussite des projets. Optimisation des performances MySQL et dashboards analytiques pour les équipes métier.",
   },
   {
     company: "Groupe Sonatel SA (Orange Sénégal)",
-    role: "Développeur Full-Stack",
-    period: "Février 2023 — Juin 2024",
-    body: "Dashboards stratégiques pour la Direction Générale, Marketing et Orange Finance Mobile. APIs REST pour formulaires métier, migration de données SQL Server vers PostgreSQL, déploiement de la plateforme AirDBM.",
-  },
-  {
-    company: "Groupe Sonatel SA",
-    role: "Développeur Full-Stack (Intérim)",
-    period: "Septembre 2022 — Décembre 2022",
-    body: "Développement de Saytu-DRPS, monitoring en temps réel de la fibre optique. Conception des interfaces UI/UX et déploiement frontend sur les serveurs Sonatel.",
+    role: "Développeur Full-Stack (intérim puis poste permanent)",
+    period: "2022 — 2024",
+    body: "Conception et développement d'un dashboard de KPIs stratégiques pour la Direction Générale, permettant le suivi en temps réel des indicateurs clés de performance. Développement de Saytu-DRPS (monitoring temps réel de la fibre optique) puis de dashboards analytiques pour le Marketing et Orange Finance Mobile. APIs REST pour formulaires métier, migration de données SQL Server vers PostgreSQL, déploiement de la plateforme AirDBM.",
   },
   {
     company: "SIHITY Hi-Tech",
     role: "Développeur Web (Apprentissage)",
-    period: "Février 2022 — Juin 2022 · Casablanca, Maroc",
+    period: "2022 · Casablanca, Maroc",
     body: "Plateforme d'automatisation de la feuille de soin marocaine. Template frontend, APIs backend et intégration backend/frontend.",
   },
+];
+
+const EDUCATION = [
+  {
+    period: "2020 — 2022",
+    title: "Diplôme d'Ingénieur — Ingénierie des Systèmes d'Information",
+    place: "ESTEM, Casablanca, Maroc",
+  },
+  {
+    period: "2019 — 2020",
+    title: "Licence — Sciences de l'Ingénieur",
+    place: "ESMT, Dakar, Sénégal",
+  },
+  {
+    period: "2017 — 2019",
+    title: "BTS — Informatique de Gestion",
+    place: "ISI, Dakar, Sénégal",
+  },
+];
+
+const CERTIFICATIONS = [
+  "Agile Scrum & Kanban — Udemy",
+  "Suivi & Évaluation de projet — AFD",
+];
+
+const LANGUAGES = [
+  { name: "Français · Wolof", level: "Bilingue" },
+  { name: "Anglais", level: "Professionnel" },
+  { name: "Soninké", level: "Intermédiaire" },
 ];
 
 const SERVICES = [
@@ -240,7 +270,7 @@ function About() {
               Je construis des produits fiables, propres et prêts pour la production.
             </h2>
             <p className="mt-6 max-w-2xl text-base leading-8 text-paper-dim">
-              Mon socle est Angular + Spring Boot, construit chez Groupe Sonatel et PRODAC, sur des dashboards stratégiques, du monitoring temps réel et des systèmes d'archivage sécurisés. Aujourd'hui, je développe en autonomie sur Node.js et React, avec RentalCar comme terrain d'expérimentation réel.
+              Mon socle est Angular + Spring Boot, construit chez Groupe Sonatel et PRODAC, sur des dashboards stratégiques, du monitoring temps réel et des systèmes d'archivage sécurisés. En parallèle de ces missions, je développe en autonomie sur Node.js et React, avec RentalCar — un projet personnel — comme terrain d'expérimentation réel.
             </p>
           </div>
           <div className="rounded-3xl border border-line/70 bg-ink-raised/70 p-6">
@@ -298,7 +328,7 @@ function StackTimeline() {
         </h2>
         <ol className="mt-10 space-y-8 border-l border-line pl-8">
           {MIGRATION.map((step) => (
-            <li key={step.period} className="relative">
+            <li key={step.title} className="relative">
               <span className="absolute -left-[2.35rem] top-1 h-3 w-3 rounded-full border-2 border-amber bg-ink" />
               <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-amber">
                 {step.period}
@@ -375,7 +405,7 @@ function Experience() {
         </h2>
         <div className="mt-10 divide-y divide-line/70 border-y border-line/70">
           {EXPERIENCE.map((job) => (
-            <div key={job.company} className="grid gap-3 py-6 md:grid-cols-[1fr_2fr] md:gap-8">
+            <div key={job.company + job.period} className="grid gap-3 py-6 md:grid-cols-[1fr_2fr] md:gap-8">
               <div>
                 <h3 className="font-display text-lg text-paper">{job.company}</h3>
                 <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-amber">
@@ -386,6 +416,43 @@ function Experience() {
               <p className="text-sm leading-7 text-paper-dim">{job.body}</p>
             </div>
           ))}
+        </div>
+
+        <div className="mt-14 grid gap-10 md:grid-cols-2">
+          <div>
+            <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-amber">
+              Formation
+            </p>
+            <ul className="mt-5 space-y-4">
+              {EDUCATION.map((e) => (
+                <li key={e.title}>
+                  <p className="font-mono text-[11px] text-paper-dim">{e.period}</p>
+                  <p className="mt-1 text-sm font-medium text-paper">{e.title}</p>
+                  <p className="text-sm text-paper-dim">{e.place}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-amber">
+              Certifications & Langues
+            </p>
+            <ul className="mt-5 space-y-2 text-sm text-paper-dim">
+              {CERTIFICATIONS.map((c) => (
+                <li key={c}>• {c}</li>
+              ))}
+            </ul>
+            <ul className="mt-5 flex flex-wrap gap-2">
+              {LANGUAGES.map((l) => (
+                <li
+                  key={l.name}
+                  className="rounded-full border border-line px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.25em] text-paper-dim"
+                >
+                  {l.name} · {l.level}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </section>
@@ -408,17 +475,25 @@ function Contact() {
     setStatus({ type: "", message: "" });
 
     try {
+      // Formspree recommande un POST en JSON pour les apps SPA (React/Vue) :
+      // c'est plus fiable que FormData dans ce contexte.
       const response = await fetch(PROFILE.formspreeEndpoint, {
         method: "POST",
-        headers: { Accept: "application/json" },
-        body: new FormData(event.currentTarget),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
       });
+
+      const data = await response.json().catch(() => null);
 
       if (response.ok) {
         setStatus({ type: "success", message: "Merci ! Votre message a bien été envoyé." });
         setForm({ name: "", email: "", message: "" });
       } else {
-        throw new Error("Le formulaire n’a pas pu être envoyé.");
+        const errorMsg = data?.errors?.map((err) => err.message).join(", ");
+        throw new Error(errorMsg || "Le formulaire n’a pas pu être envoyé.");
       }
     } catch (error) {
       setStatus({
